@@ -25,6 +25,7 @@ import com.example.android.architecture.blueprints.todoapp.data.source.TasksRepo
 import com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSource
 import com.example.android.architecture.blueprints.todoapp.data.source.local.ToDoDatabase
 import kotlinx.coroutines.runBlocking
+import timber.log.Timber
 
 /**
  * A Service Locator for the [TasksRepository]. This is the mock version, with a
@@ -40,17 +41,20 @@ object ServiceLocator {
 
     fun provideTasksRepository(context: Context): TasksRepository {
         synchronized(this) {
+            Timber.i("")
             return tasksRepository ?: tasksRepository ?: createTasksRepository(context)
         }
     }
 
     private fun createTasksRepository(context: Context): TasksRepository {
+        Timber.i("")
         val newRepo = DefaultTasksRepository(FakeTasksRemoteDataSource, createTaskLocalDataSource(context))
         tasksRepository = newRepo
         return newRepo
     }
 
     private fun createTaskLocalDataSource(context: Context): TasksDataSource {
+        Timber.i("")
         val database = database ?: createDataBase(context)
         return TasksLocalDataSource(database.taskDao())
     }
@@ -60,6 +64,7 @@ object ServiceLocator {
         context: Context,
         inMemory: Boolean = false
     ): ToDoDatabase {
+        Timber.i("")
         val result = if (inMemory) {
             // Use a faster in-memory database for tests
             Room.inMemoryDatabaseBuilder(context.applicationContext, ToDoDatabase::class.java)
@@ -79,6 +84,7 @@ object ServiceLocator {
     @VisibleForTesting
     fun resetRepository() {
         synchronized(lock) {
+            Timber.d("")
             runBlocking {
                 FakeTasksRemoteDataSource.deleteAllTasks()
             }

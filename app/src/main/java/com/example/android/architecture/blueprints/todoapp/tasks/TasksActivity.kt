@@ -26,8 +26,8 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.android.architecture.blueprints.todoapp.R
-import com.example.android.architecture.blueprints.todoapp.util.Log
 import com.google.android.material.navigation.NavigationView
+import timber.log.Timber
 
 /**
  * Main activity for the todoapp. Holds the Navigation Host Fragment and the Drawer, Toolbar, etc.
@@ -39,7 +39,7 @@ class TasksActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.i("")
+        Timber.d("")
         setContentView(R.layout.tasks_act)
         setupNavigationDrawer()
         setSupportActionBar(findViewById(R.id.toolbar))

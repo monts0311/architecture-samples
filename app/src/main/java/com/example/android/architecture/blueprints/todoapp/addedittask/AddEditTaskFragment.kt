@@ -19,7 +19,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -32,6 +31,7 @@ import com.example.android.architecture.blueprints.todoapp.util.getViewModelFact
 import com.example.android.architecture.blueprints.todoapp.util.setupRefreshLayout
 import com.example.android.architecture.blueprints.todoapp.util.setupSnackbar
 import com.google.android.material.snackbar.Snackbar
+import timber.log.Timber
 
 /**
  * Main UI for the add task screen. Users can enter a task title and description.
@@ -42,7 +42,9 @@ class AddEditTaskFragment : BaseFragment() {
 
     private val args: AddEditTaskFragmentArgs by navArgs()
 
-    private val viewModel by viewModels<AddEditTaskViewModel> { getViewModelFactory() }
+    private val viewModel by viewModels<AddEditTaskViewModel> {
+        getViewModelFactory()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,10 +53,14 @@ class AddEditTaskFragment : BaseFragment() {
     ): View {
         val root = inflater.inflate(R.layout.addtask_frag, container, false)
         viewDataBinding = AddtaskFragBinding.bind(root).apply {
+            Timber.i("this = ${this.javaClass.simpleName}")
             this.viewmodel = viewModel
         }
         // Set the lifecycle owner to the lifecycle of the view
         viewDataBinding.lifecycleOwner = this.viewLifecycleOwner
+        viewModel.title.observe(viewLifecycleOwner) {
+            Timber.i("thread = ${Thread.currentThread().name}, title = ${viewModel.title.value}")
+        }
         return viewDataBinding.root
     }
 
@@ -63,6 +69,7 @@ class AddEditTaskFragment : BaseFragment() {
         setupSnackbar()
         setupNavigation()
         this.setupRefreshLayout(viewDataBinding.refreshLayout)
+        Timber.i("args = ${args.toString()}")
         viewModel.start(args.taskId)
     }
 

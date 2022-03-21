@@ -20,14 +20,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.android.architecture.blueprints.todoapp.R
 import com.example.android.architecture.blueprints.todoapp.base.BaseFragment
 import com.example.android.architecture.blueprints.todoapp.databinding.StatisticsFragBinding
-import com.example.android.architecture.blueprints.todoapp.util.Log
 import com.example.android.architecture.blueprints.todoapp.util.getViewModelFactory
 import com.example.android.architecture.blueprints.todoapp.util.setupRefreshLayout
+import timber.log.Timber
 
 /**
  * Main UI for the statistics screen.
@@ -43,7 +42,7 @@ class StatisticsFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.i("")
+        Timber.d("")
         viewDataBinding = DataBindingUtil.inflate(
             inflater, R.layout.statistics_frag, container,
             false
@@ -53,7 +52,7 @@ class StatisticsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.i("")
+        Timber.d("")
         viewDataBinding.viewmodel = viewModel
         viewDataBinding.lifecycleOwner = this.viewLifecycleOwner
         this.setupRefreshLayout(viewDataBinding.refreshLayout)
