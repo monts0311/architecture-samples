@@ -36,6 +36,7 @@ import com.example.android.architecture.blueprints.todoapp.tasks.TasksFilterType
 import com.example.android.architecture.blueprints.todoapp.tasks.TasksFilterType.ALL_TASKS
 import com.example.android.architecture.blueprints.todoapp.tasks.TasksFilterType.COMPLETED_TASKS
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 /**
  * ViewModel for the task list screen.
@@ -149,6 +150,7 @@ class TasksViewModel(
 
     fun clearCompletedTasks() {
         viewModelScope.launch {
+            Timber.d("Thread : ${Thread.currentThread().name}")
             tasksRepository.clearCompletedTasks()
             showSnackbarMessage(R.string.completed_tasks_cleared)
         }

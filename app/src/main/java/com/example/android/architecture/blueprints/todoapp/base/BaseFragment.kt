@@ -7,6 +7,6 @@ import timber.log.Timber
 open class BaseFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Timber.d("[${this.javaClass.simpleName}]")
+        Timber.i("[${this.javaClass.simpleName}]")
     }
 }

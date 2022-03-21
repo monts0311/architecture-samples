@@ -41,20 +41,20 @@ object ServiceLocator {
 
     fun provideTasksRepository(context: Context): TasksRepository {
         synchronized(this) {
-            Timber.i("")
+            Timber.i("-")
             return tasksRepository ?: tasksRepository ?: createTasksRepository(context)
         }
     }
 
     private fun createTasksRepository(context: Context): TasksRepository {
-        Timber.i("")
+        Timber.i("-")
         val newRepo = DefaultTasksRepository(FakeTasksRemoteDataSource, createTaskLocalDataSource(context))
         tasksRepository = newRepo
         return newRepo
     }
 
     private fun createTaskLocalDataSource(context: Context): TasksDataSource {
-        Timber.i("")
+        Timber.i("-")
         val database = database ?: createDataBase(context)
         return TasksLocalDataSource(database.taskDao())
     }
@@ -64,7 +64,7 @@ object ServiceLocator {
         context: Context,
         inMemory: Boolean = false
     ): ToDoDatabase {
-        Timber.i("")
+        Timber.i("-")
         val result = if (inMemory) {
             // Use a faster in-memory database for tests
             Room.inMemoryDatabaseBuilder(context.applicationContext, ToDoDatabase::class.java)
@@ -84,7 +84,7 @@ object ServiceLocator {
     @VisibleForTesting
     fun resetRepository() {
         synchronized(lock) {
-            Timber.d("")
+            Timber.i("-")
             runBlocking {
                 FakeTasksRemoteDataSource.deleteAllTasks()
             }

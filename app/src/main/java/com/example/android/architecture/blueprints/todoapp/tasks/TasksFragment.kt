@@ -141,7 +141,7 @@ class TasksFragment : BaseFragment() {
 
     // TODO: Move this to databinding
     private fun setupFab() {
-        requireView().findViewById<FloatingActionButton>(R.id.add_task_fab)?.let {
+        viewDataBinding.addTaskFab.let {
             it.setOnClickListener {
                 navigateToAddNewTask()
             }
